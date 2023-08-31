@@ -1,0 +1,16 @@
+<div>
+    
+<p>{{information}}</p>
+<zxing-scanner *ngIf="scannerEnabled" #scanner (scanSuccess)="scanSuccessHandler($event)">
+</zxing-scanner>
+</div>
+<div>
+    <div class="card bg-dark text-white col-sm-10">
+    <div class="form-group row py-2">
+        <label for="numcontrol" class="col-form-label col-sm-4">O ingrese su numero de registro</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" (keyup.enter)='buscarPorNumero($event)'>
+        </div>
+    </div>
+    </div>
+</div>

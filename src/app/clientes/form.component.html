@@ -1,0 +1,66 @@
+<ul class="alert alert-danger" *ngIf="errores?.length > 0">
+    <li *ngFor="let err of errores">
+        {{ err }}
+    </li>
+</ul>
+<div class="card bg-dark text-white">
+    <div class="card-header">{{ titulo }}</div>
+    <div class="card-body">
+
+        <form #clienteForm="ngForm">
+            <div class="form-group row py-2">
+                <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" [(ngModel)]="cliente.nombre" name="nombre" required minlength="4" #nombre="ngModel">
+                    <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                        <div *ngIf="nombre.errors.required">
+                            Nombre es requerido
+                        </div>
+                        <div *ngIf="nombre.errors.minlength">
+                            Nombre debe tener mas de 3 caracter
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row py-2">
+                    <label for="apellidos" class="col-form-label col-sm-2">Apellidos</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" [(ngModel)]="cliente.apellidos" name="apellidos" #apellidos="ngModel">
+
+                    </div>
+            </div>
+                
+            <div class="form-group row py-2">
+                <label for="correo" class="col-form-label col-sm-2">Correo</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" [(ngModel)]="cliente.correo" name="correo" email #correo="ngModel">
+   
+                </div>
+            </div>
+
+            <div class="form-group row py-2">
+                <label for="fechaInicio" class="col-form-label col-sm-2">Periodo:</label>
+                <div class="col-sm-6">
+                   <select [disabled]="cliente.estatus===true" [compareWith]="compararPeriodo" class="form-control" [(ngModel)]="cliente.periodo" name="periodo" style="width: 300px;">
+                    <option [ngValue]="undefined">--- Seleccionar un periodo ---</option>
+                    <option *ngFor="let periodo of periodos" [ngValue]="periodo">{{periodo.periodo}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!cliente.id else elseBlock" [disabled]="!clienteForm.form.valid">Registrar</button>
+
+                    <ng-template #elseBlock>
+                        <button class="btn btn-primary" role="button" (click)='update()' [disabled]="!clienteForm.form.valid">Editar</button>
+                    </ng-template>
+
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>

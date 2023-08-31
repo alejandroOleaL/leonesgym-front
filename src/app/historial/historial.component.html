@@ -1,0 +1,31 @@
+<div class="card border-primary mb-3">
+    <div class="card-header">Visitas el dia de hoy</div>
+    <div class="card-body text-primary">
+      <h5 class="card-title">Lista de usuarios</h5>
+      <div *ngIf="historial?.length == 0" class="alert alert-info">
+        No hay registros en la base de datos!
+      </div>
+
+      <table class="table table-bordered table-striped" *ngIf="historial?.length>0">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>fecha</th>
+                <th>hora</th>
+                <th>nombre</th>
+                <th>apellidos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let historial of historial">
+                <td>{{ historial.id }}</td>
+                <td>{{ historial.fechaVisita }}</td>
+                <td>{{ historial.horaVisita }}</td>
+                <td>{{ historial.cliente.nombre }}</td>
+                <td>{{ historial.cliente.apellidos }}</td>
+            </tr>
+        </tbody>
+      </table>
+      <app-paginatorhistorial *ngIf="paginador" [paginador] = "paginador"></app-paginatorhistorial>
+    </div>
+</div>
