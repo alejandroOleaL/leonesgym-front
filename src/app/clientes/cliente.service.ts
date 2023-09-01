@@ -22,7 +22,7 @@ export class ClienteService {
   public httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
 
   constructor(public http: HttpClient,
-    public router: Router, public authService, AuthSerivce) { }
+    public router: Router, public authService: AuthService) { }
 
   private agregarAuthorizationHeader(){
     let token = this.authService.token;
