@@ -26,6 +26,7 @@ export class FormComponent implements OnInit{
       let id = +params.get('id');
       if (id) {
         this.clienteService.getCliente(id).subscribe((cliente) => this.cliente = cliente);
+        console.log(this.cliente)
       }
     });
     this.clienteService.getPeriodos().subscribe(periodos => this.periodos = periodos);
@@ -51,7 +52,7 @@ export class FormComponent implements OnInit{
       this.errores = err.error.errors as string[];
       console.error(err.error.errors);
     }
-    );
+    ); 
   }
 
   update():void{

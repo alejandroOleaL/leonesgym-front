@@ -40,6 +40,8 @@ export class LoginComponent implements OnInit{
 
       let usuario = this.authService.usuario;
 
+      console.log(usuario.roles);
+
       this.router.navigate(['/clientes']);
       swal.fire('Login', `Hola ${usuario.username}, has iniciado sesion con éxito!`, 'success');
     }, err => {

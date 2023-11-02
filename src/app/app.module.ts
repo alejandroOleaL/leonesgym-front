@@ -28,6 +28,8 @@ import { UsuarioformComponent } from './usuarios/usuarioform.component';
 import { HistorialComponent } from './historial/historial.component';
 import { PaginatorhistorialComponent } from './paginatorhistorial/paginatorhistorial.component';
 import { LoginComponent } from './usuarios/login.component';
+import { PaginatorusuariosComponent } from './paginatorusuarios/paginatorusuarios.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
 registerLocaleData(localEs, 'es');
 
@@ -42,7 +44,9 @@ const routes: Routes = [
   {path: 'usuarios/form', component: UsuarioformComponent},
   {path: 'usuarios/form/:id', component: UsuarioformComponent},
   {path: 'historial/page/:page', component: HistorialComponent},
-  {path: 'login', component: LoginComponent}
+  {path: 'usuarios/page/:page', component: UsuariosComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'estadisticas', component: EstadisticasComponent}
 ];
 
 @NgModule({
@@ -59,7 +63,9 @@ const routes: Routes = [
     UsuarioformComponent,
     HistorialComponent,
     PaginatorhistorialComponent,
-    LoginComponent
+    LoginComponent,
+    PaginatorusuariosComponent,
+    EstadisticasComponent
   ],
   imports: [
     BrowserModule,

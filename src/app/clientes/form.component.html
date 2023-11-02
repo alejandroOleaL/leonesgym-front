@@ -44,7 +44,7 @@
                 <div class="col-sm-6">
                    <select [disabled]="cliente.estatus===true" [compareWith]="compararPeriodo" class="form-control" [(ngModel)]="cliente.periodo" name="periodo" style="width: 300px;">
                     <option [ngValue]="undefined">--- Seleccionar un periodo ---</option>
-                    <option *ngFor="let periodo of periodos" [ngValue]="periodo">{{periodo.periodo}}</option>
+                    <option *ngFor="let periodo of periodos" [ngValue]="periodo">{{periodo.nombre}}</option>
                     </select>
                 </div>
             </div>

@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
-  selector: 'app-paginatorhistorial',
-  templateUrl: './paginatorhistorial.component.html'
+  selector: 'app-paginatorusuarios',
+  templateUrl: './paginatorusuarios.component.html'
 })
-export class PaginatorhistorialComponent implements OnInit, OnChanges{
+export class PaginatorusuariosComponent implements OnInit, OnChanges {
 
   @Input() paginador: any;
   paginas: number[];

@@ -19,13 +19,13 @@
                 <th>editar</th>
                 <th>eliminar</th>
             </tr>
-        </thead>
+        </thead> 
         <tbody>
             <tr *ngFor="let usuario of usuarios">
                 <td>{{ usuario.id }}</td>
                 <td>{{ usuario.nombre }}</td>
                 <td>{{ usuario.apellidos }}</td>
-                <td>{{ usuario.tipo }}</td>
+                <td><span *ngFor="let role of usuario.roles">{{role.nombre + ' '}}</span></td>
                 <td>
                     <button type="button" name="button" [routerLink]="['/usuarios/form', usuario.id]" class="btn btn-primary btn-sm">Editar</button>
                 </td>
@@ -35,5 +35,6 @@
             </tr>
         </tbody>
       </table>
+      <app-paginatorusuarios *ngIf="paginador" [paginador] = "paginador"></app-paginatorusuarios>
     </div>
 </div>

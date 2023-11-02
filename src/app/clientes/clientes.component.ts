@@ -10,7 +10,7 @@ import { AuthService } from '../usuarios/auth.service';
 
 @Component({
   selector: 'app-clientes',
-  templateUrl: './clientes.component.html'
+  templateUrl: './clientes.component.html' 
 })
 export class ClientesComponent implements OnInit {
 

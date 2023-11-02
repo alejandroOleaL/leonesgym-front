@@ -9,13 +9,15 @@ import { Router } from "@angular/router";
 })
 export class HeaderComponent {
 
+    title: string = 'App Angular'
+    
     constructor(public authService: AuthService,
-        private router: Router){}
+        public router: Router){}
 
     logout():void{
         let username = this.authService.usuario.username;
         this.authService.logout();
-        swal.fire(`Hola ${username}, has cerrado sesión!`, 'success');
+        swal.fire('Logout', `Hola ${username}, has cerrado sesión!`, 'success');
         this.router.navigate(['/login']);
     }
 

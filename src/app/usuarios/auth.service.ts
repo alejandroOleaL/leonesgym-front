@@ -66,13 +66,16 @@ export class AuthService {
 
   obtenerDatosToken(accessToken: string): any{
     if(accessToken != null){
-     return JSON.parse(atob(accessToken.split(".")[1]));
+     //return JSON.parse(atob(accessToken.split(".")[1]));
+     const token = accessToken.split(".")[1];
+     const payload = atob(token);
+     return JSON.parse(payload);
     }
     return null;
   }
 
   isAuthenticated(): boolean{
-    let payload = this.obtenerDatosToken(this.token);
+    let payload = this.obtenerDatosToken(this.token!);
     if(payload != null && payload.user_name && payload.user_name.length > 0){
       return true;
     }

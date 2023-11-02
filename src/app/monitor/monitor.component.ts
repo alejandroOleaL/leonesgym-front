@@ -13,7 +13,7 @@ import { map, catchError, tap } from 'rxjs/operators';
   styleUrls: ['./monitor.component.css']
 })
 export class MonitorComponent {
-
+ 
   public scannerEnabled: boolean = true;
   public information: string = "No se  detectado información de ningún código. Acerque un código QR para escanear.";
 
@@ -34,6 +34,8 @@ export class MonitorComponent {
     this.scannerEnabled = false;
     this.information = "Espera recuperando información... ";
     this.information = $event;
+
+    console.log($event);
 
       if ($event) {
         this.clienteService.getClienteQr($event).subscribe((cliente) => this.cliente = cliente);
@@ -83,7 +85,8 @@ export class MonitorComponent {
   public buscarPorNumero($event: any) {
 
       if ($event) {
-        this.clienteService.getClienteNumero($event).subscribe((cliente) => this.cliente = cliente);
+        let numero = this.getValue($event)
+        this.clienteService.getClienteNumero(numero).subscribe((cliente) => this.cliente = cliente);
       }
 
     if(this.estaVencido){
@@ -120,5 +123,8 @@ export class MonitorComponent {
 
   }
 
+  getValue(event: Event): string {
+    return (event.target as HTMLInputElement).value;
+  }
 
 }

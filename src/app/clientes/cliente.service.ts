@@ -8,6 +8,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { AuthService } from '../usuarios/auth.service';
+import { Datos } from '../estadisticas/datos';
 
 @Injectable({
   providedIn: 'root'
@@ -82,6 +83,15 @@ export class ClienteService {
         );
     }
 
+    getDatos(): Observable<Datos>{
+      return this.http.get<Datos>(this.urlEndPonint + '/datos').pipe(
+        catchError(e => {
+          this.isNoAutorizado(e);
+          return throwError(e);
+        })
+      );
+    }
+
     create(cliente: Cliente) : Observable<Cliente> {
       return this.http.post(this.urlEndPonint, cliente, {headers: this.httpHeaders}).pipe(
         map ( (response: any) => response.cliente as Cliente),
@@ -133,9 +143,15 @@ export class ClienteService {
     }
 
     getClienteNumero(numcontrol): Observable<Cliente>{
-      return this.http.get<Cliente>(`${this.urlEndPonintNumero}/${numcontrol}`).pipe(
+      return this.http.get<Cliente>(`${this.urlEndPonintNumero}/${numcontrol}`, {headers: this.agregarAuthorizationHeader()}).pipe(
         catchError(e => {
-          this.isNoAutorizado(e);
+
+          if(this.isNoAutorizado(e)){
+            return throwError(e);
+          }
+
+          this.router.navigate(['/clientes']);
+          Swal.fire('Error al buscar', e.error.mensaje, 'error');
           return throwError(e);
         })
       );

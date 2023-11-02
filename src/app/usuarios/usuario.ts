@@ -1,3 +1,5 @@
+import { Role } from "./role";
+
 export class Usuario {
     id:number;
     username:string;
@@ -6,4 +8,6 @@ export class Usuario {
     apellidos:string;
     email:string;
     roles:string[]=[];
+    role: Role[]=[];
+    tipo: number;
 }
