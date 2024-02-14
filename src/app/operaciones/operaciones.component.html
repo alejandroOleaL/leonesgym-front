@@ -1,0 +1,37 @@
+<div class="card border-primary mb-3">
+    <div class="card-header">Operaciones</div>
+    <div class="card-body text-primary">
+      <h5 class="card-title">Lista de operaciones del día</h5>
+      <div *ngIf="operacion?.length == 0" class="alert alert-info">
+        No hay registros en la base de datos!
+      </div>
+
+      <table class="table table-bordered table-striped" *ngIf="operacion?.length>0">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Operación</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Cliente</th>
+                <th>Cliente Act</th>
+                <th>Fecha Fin</th>
+                <th>FecAct Fin</th>
+            </tr>
+        </thead> 
+        <tbody>
+            <tr *ngFor="let operacion of operacion">
+                <td>{{ operacion.username }}</td>
+                <td>{{ operacion.tipoOperacion }}</td>
+                <td>{{ operacion.fecha |date:"longDate" }}</td>
+                <td>{{ operacion.hora }}</td>
+                <td>{{ operacion.cliente }}</td>
+                <td>{{ operacion.clienteActual }}</td>
+                <td>{{ operacion.fechaFin }}</td>
+                <td>{{ operacion.nuevaFecFin }}</td>
+            </tr>
+        </tbody>
+      </table>
+      <app-paginatoroperaciones *ngIf="paginador" [paginador] = "paginador"></app-paginatoroperaciones>
+    </div>
+</div>

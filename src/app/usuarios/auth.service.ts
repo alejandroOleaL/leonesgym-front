@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Usuario } from './usuario';
+import { URL_BACKEND } from 'src/config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,7 @@ export class AuthService {
   }
   
   login(usuario: Usuario): Observable<any> {
-    const urlEndpoint = 'http://localhost:8080/oauth/token';
+    const urlEndpoint = URL_BACKEND + '/oauth/token';
 
     const credenciales = btoa('angularapp' + ':' + '12345');
     const httpHeaders = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded', 
@@ -89,12 +90,23 @@ export class AuthService {
     return false;
   }
 
+  hasUsuario(username: string): boolean{
+    if(this.usuario.username === 'admin') {
+      return true;
+    }
+    return false;
+  } 
+
   logout(): void{
     this._token = null;
     this._usuario = null;
     sessionStorage.clear();
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('usuario');
+  }
+
+  obtenerUsuario(): string{
+    return this.usuario.username;
   }
 
 }

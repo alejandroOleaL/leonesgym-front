@@ -4,4 +4,5 @@ export class Datos{
     activos: number;
     inactivos: number;
     total: number;
+    registros: number;
 }

@@ -33,19 +33,19 @@ export class LoginComponent implements OnInit{
     }
 
     this.authService.login(this.usuario).subscribe(response => {
-      console.log(response);
+      console.log('login', response);
 
       this.authService.guardarUsuario(response.access_token);
       this.authService.guardarToken(response.access_token);
 
       let usuario = this.authService.usuario;
 
-      console.log(usuario.roles);
+      console.log(usuario);
 
       this.router.navigate(['/clientes']);
       swal.fire('Login', `Hola ${usuario.username}, has iniciado sesion con éxito!`, 'success');
     }, err => {
-      if(err.status == 404){
+      if(err.status == 400){
         swal.fire('Error Login', 'Usuario o clave incorrectas!', 'error');
       }
     }

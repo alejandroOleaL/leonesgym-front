@@ -11,4 +11,7 @@ export class Cliente {
     periodo: Periodo;
     diasPeriodo: number;
     estatus: boolean;
+    username:string;
+    roleUser:string;
+    existe: boolean;
 }

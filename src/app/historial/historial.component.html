@@ -19,10 +19,10 @@
         <tbody>
             <tr *ngFor="let historial of historial">
                 <td>{{ historial.id }}</td>
-                <td>{{ historial.fechaVisita }}</td>
+                <td>{{ historial.fechaVisita |date:"longDate"}}</td>
                 <td>{{ historial.horaVisita }}</td>
-                <td>{{ historial.cliente.nombre }}</td>
-                <td>{{ historial.cliente.apellidos }}</td>
+                <td>{{ historial.nombre }}</td>
+                <td>{{ historial.apellidos }}</td>
             </tr>
         </tbody>
       </table>

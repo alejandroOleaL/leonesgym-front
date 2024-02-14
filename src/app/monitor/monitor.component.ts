@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, VERSION } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, VERSION } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Router, ActivatedRoute} from '@angular/router';
 import { HttpClient, HttpHeaders, HttpRequest, HttpEvent } from '@angular/common/http';
@@ -6,28 +6,42 @@ import { Cliente } from '../clientes/cliente';
 import { ClienteService } from '../clientes/cliente.service';
 import { of, Observable, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
+import { URL_BACKEND } from 'src/config/config';
 
 @Component({
   selector: 'app-monitor',
   templateUrl: './monitor.component.html',
   styleUrls: ['./monitor.component.css']
 })
-export class MonitorComponent {
+export class MonitorComponent  {
  
   public scannerEnabled: boolean = true;
   public information: string = "No se  detectado información de ningún código. Acerque un código QR para escanear.";
 
-  public urlEndPonint:string = 'http://localhost:8080/leonesgym/clientes/qr';
+  public urlEndPonint:string = URL_BACKEND + '/leonesgym/clientes/qr';
+  public urlEndPonintNumero:string = URL_BACKEND + '/leonesgym/clientes/numero/control';
   public httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
   public cliente: Cliente = new Cliente();
 
   public estaVencido = true;
+  public fechaFor: Date = new Date();
+
+  public numControl: string;
+  urlBackend: string = URL_BACKEND;
 
   constructor(public clienteService: ClienteService,
     public router: Router,
-    public activatedRoute: ActivatedRoute) { }
+    public activatedRoute: ActivatedRoute,
+    public http: HttpClient) { }
 
   ngOnInit() {
+    this.activatedRoute.paramMap.subscribe(params => {
+      let id = +params.get('id');
+      if (id) {
+        console.log('ID enviar: ', id)
+        this.clienteService.getEnviar(id).subscribe((cliente) => this.cliente = cliente);
+      }
+    });
   }
 
   public scanSuccessHandler($event: any) {
@@ -38,41 +52,9 @@ export class MonitorComponent {
     console.log($event);
 
       if ($event) {
-        this.clienteService.getClienteQr($event).subscribe((cliente) => this.cliente = cliente);
+        this.router.navigate(['/bienvenidaqr', $event]);
       }
-
-    if(this.cliente.estatus){
-        let timerInterval
-      Swal.fire({
-        title: `El cliente ${this.cliente.nombre} éxito!`,
-        html: 'I will close in <b></b> milliseconds.',
-        text: "Leones",
-        imageUrl: `http://localhost:8080/leonesgym/uploads/img/${this.cliente.foto}`,
-        imageWidth: 400,
-        imageHeight: 200,
-        imageAlt: 'Custom image',
-        timer: 5000,
-        timerProgressBar: true,
-        didOpen: () => {},
-        willClose: () => {
-          clearInterval(500)
-        }
-      }).then((result) => {
-        /* Read more about handling dismissals below */
-        if (result.dismiss === Swal.DismissReason.timer) {
-          console.log('I was closed by the timer')
-        }
-      })
-    }
-    else{
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong!',
-        footer: '<a href="">Why do I have this issue?</a>'
-      })
-    }
-    
+      
     this.enableScanner();
 
   }
@@ -84,47 +66,25 @@ export class MonitorComponent {
 
   public buscarPorNumero($event: any) {
 
+    let numero
       if ($event) {
-        let numero = this.getValue($event)
-        this.clienteService.getClienteNumero(numero).subscribe((cliente) => this.cliente = cliente);
+        numero = this.getValue($event)
       }
-
-    if(this.estaVencido){
-        let timerInterval
-      Swal.fire({
-        title: `El cliente ${this.cliente.nombre} éxito!`,
-        html: 'I will close in <b></b> milliseconds.',
-        text: "Leones",
-        imageUrl: `http://localhost:8080/leonesgym/uploads/img/${this.cliente.foto}`,
-        imageWidth: 400,
-        imageHeight: 200,
-        imageAlt: 'Custom image',
-        timer: 5000,
-        timerProgressBar: true,
-        didOpen: () => {},
-        willClose: () => {
-          clearInterval(500)
-        }
-      }).then((result) => {
-        /* Read more about handling dismissals below */
-        if (result.dismiss === Swal.DismissReason.timer) {
-          console.log('I was closed by the timer')
-        }
-      })
-    }
-    else{
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong!',
-        footer: '<a href="">Why do I have this issue?</a>'
-      })
-    }
+      this.numControl='';
+      
+      this.router.navigate(['/bienvenida', numero]);
 
   }
 
   getValue(event: Event): string {
     return (event.target as HTMLInputElement).value;
   }
+
+  formatDate(date: Date): string {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+}
 
 }

@@ -7,13 +7,14 @@ import { Usuario } from './usuario';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Role } from './role';
 import { AuthService } from './auth.service';
+import { URL_BACKEND } from 'src/config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
-  public urlEndPoint:string = 'http://localhost:8080/leonesgym/usuarios';
+  public urlEndPoint:string = URL_BACKEND + '/leonesgym/usuarios';
 
   public httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
 

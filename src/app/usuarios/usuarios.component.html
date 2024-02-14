@@ -13,11 +13,12 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>nombre</th>
-                <th>apellidos</th>
-                <th>tipo</th>
-                <th>editar</th>
-                <th>eliminar</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>User</th>
+                <th>Tipo</th>
+         <!--       <th>Editar</th> -->
+                <th *ngIf="authService.hasUsuario('admin')">Eliminar</th>
             </tr>
         </thead> 
         <tbody>
@@ -25,11 +26,12 @@
                 <td>{{ usuario.id }}</td>
                 <td>{{ usuario.nombre }}</td>
                 <td>{{ usuario.apellidos }}</td>
+                <td>{{ usuario.username }}</td>
                 <td><span *ngFor="let role of usuario.roles">{{role.nombre + ' '}}</span></td>
-                <td>
+       <!--         <td>
                     <button type="button" name="button" [routerLink]="['/usuarios/form', usuario.id]" class="btn btn-primary btn-sm">Editar</button>
-                </td>
-                <td>
+                </td>-->
+                <td *ngIf="authService.hasUsuario('admin')">
                     <button type="button" name="eliminar" (click)='delete(usuario)' class="btn btn-danger btn-sm">Eliminar</button>
                 </td>
             </tr>

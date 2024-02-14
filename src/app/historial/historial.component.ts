@@ -15,7 +15,7 @@ export class HistorialComponent implements OnInit {
   paginador: any;
 
   constructor(public historialService: HistorialService,
-    private activatedRoute: ActivatedRoute) {}  
+    public activatedRoute: ActivatedRoute) {}  
 
   ngOnInit(){
     this.activatedRoute.paramMap.subscribe( params => {
@@ -30,7 +30,7 @@ export class HistorialComponent implements OnInit {
       tap(response => {
         console.log('HistorialComponent: tap 3');
         (response.content as Historial[]).forEach(historial => {
-          console.log(historial.cliente.nombre);
+          console.log(historial.nombre);
         });
       })
     ).subscribe(response => {

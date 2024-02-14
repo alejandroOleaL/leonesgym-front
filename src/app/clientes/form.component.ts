@@ -4,6 +4,7 @@ import { Periodo } from './periodo';
 import { ClienteService } from './cliente.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
+import { AuthService } from '../usuarios/auth.service';
 
 @Component({
   selector: 'app-form',
@@ -14,10 +15,13 @@ export class FormComponent implements OnInit{
   public cliente: Cliente = new Cliente();
   periodos: Periodo[];
   public titulo:string = "Registrar cliente";
+  public username;
+  public roleUser;
 
   errores: string[];
 
   constructor(public clienteService: ClienteService,
+    public authService: AuthService,
     public router: Router,
     public activatedRoute: ActivatedRoute){}
 
@@ -27,6 +31,13 @@ export class FormComponent implements OnInit{
       if (id) {
         this.clienteService.getCliente(id).subscribe((cliente) => this.cliente = cliente);
         console.log(this.cliente)
+        if(this.authService.hasRole('ROLE_ADMIN')){
+          this.roleUser  = 'ROLE_ADMIN'
+        }
+        else{
+          this.roleUser  = 'ROLE_USER'
+        }
+        this.username = this.authService.obtenerUsuario();
       }
     });
     this.clienteService.getPeriodos().subscribe(periodos => this.periodos = periodos);
@@ -43,8 +54,42 @@ export class FormComponent implements OnInit{
 
   public create(): void{
     console.log(this.cliente);
+    if(this.authService.hasRole('ROLE_ADMIN')){
+      this.roleUser  = 'ROLE_ADMIN'
+    }
+    else{
+      this.roleUser  = 'ROLE_USER'
+    }
+    this.username = this.authService.obtenerUsuario();
+    this.cliente.username = this.username;
+    this.cliente.roleUser = this.roleUser;
+    console.log('ENVIANDO USER: ', this.cliente.username)
+
+    let timerInterval;
+    swal.fire({
+      title: "Se registra cliente nuevo!",
+      html: "Terminando en <b></b> segundos.",
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: () => {
+        swal.showLoading();
+        const timer = swal.getPopup().querySelector("b");
+        timerInterval = setInterval(() => {
+          timer.textContent = `${swal.getTimerLeft()}`;
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      }
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === swal.DismissReason.timer) {
+        console.log("I was closed by the timer");
+      }
+    });
+    
     this.clienteService.create(this.cliente)
-    .subscribe(cliente => {
+    .subscribe(cliente => { 
       this.router.navigate(['/clientes'])
       swal.fire('Nuevo cliente', `El cliente ${cliente.nombre} ha sido creado con éxito!`, 'success')
     },
@@ -57,6 +102,9 @@ export class FormComponent implements OnInit{
 
   update():void{
     console.log(this.cliente);
+    this.cliente.username = this.username;
+    this.cliente.roleUser = this.roleUser;
+    console.log('ENVIANDO USER: ', this.cliente.username)
     this.clienteService.update(this.cliente)
     .subscribe(json => {
       this.router.navigate(['/clientes'])

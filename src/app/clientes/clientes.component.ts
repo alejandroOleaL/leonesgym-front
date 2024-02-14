@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
 import { ModalService } from './detalle/modal.service';
@@ -7,10 +7,14 @@ import { tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { formatDate } from '@angular/common';
 import { AuthService } from '../usuarios/auth.service';
+import { URL_BACKEND } from 'src/config/config';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-clientes',
-  templateUrl: './clientes.component.html' 
+  templateUrl: './clientes.component.html',
+  styleUrls: ['./clientes.component.css']
 })
 export class ClientesComponent implements OnInit {
 
@@ -18,11 +22,17 @@ export class ClientesComponent implements OnInit {
   paginador: any;
   clienteSeleccionado: Cliente;
   fecha = formatDate(new Date(), 'yyyy-MM-dd', 'en-ES')
+  urlBackend: string = URL_BACKEND;
+  dataSource:any;
+
+  @ViewChild(MatSort, {static: true}) sort!: MatSort;
 
   constructor(private clienteService: ClienteService,
     private activatedRoute: ActivatedRoute,
     public authService: AuthService,
-    private modalService: ModalService){}
+    public modalService: ModalService){}
+
+    columnas: string[] = ['nombre', 'apellidos', 'numControl', 'fechaInicio', 'fechaFin', 'estatus', 'eliminar'];
 
   ngOnInit(){
     this.activatedRoute.paramMap.subscribe( params => {
@@ -43,7 +53,11 @@ export class ClientesComponent implements OnInit {
     ).subscribe(response => {
       this.clientes = response.content as Cliente[];
       this.paginador = response;
+      this.dataSource = new MatTableDataSource<Cliente>(this.clientes);
+    console.log(this.dataSource)
+    this.dataSource.sort = this.sort;
     });
+
     });
 
     this.modalService.notificarUpload.subscribe(cliente => {
@@ -54,6 +68,8 @@ export class ClientesComponent implements OnInit {
         return clienteOriginal;
       });
     });
+
+   
   }
 
   delete(cliente: Cliente): void {

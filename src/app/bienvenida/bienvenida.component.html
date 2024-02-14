@@ -1,0 +1,65 @@
+   <div class="container gym-class mb-6 mt-1" *ngIf="cliente.existe else elseBlock">
+        <div class="row px-8">
+            <div class="col-md-8 p-0" *ngIf="fecha<=cliente.fechaFin else elseBlock2" >
+                <div class="gym-class-box1 d-flex flex-column align-items-start justify-content-center text-left text-white py-2 px-5">
+                    <i class="flaticon-bodybuilding"></i>
+                    <h3 class="display-4 mb-3 text-white font-weight-bold">Bienvenido</h3>
+                    <p class="font-italic text-capitalize display-6">
+                       {{cliente.nombre}} {{cliente.apellidos}}
+                    </p>
+                    <p>
+                        Su fecha de vencimiento es: {{cliente.fechaFin | date:'mediumDate'}}
+                    </p>
+                        <img *ngIf="cliente?.foto" 
+                        src="{{urlBackend}}/leonesgym/uploads/img/{{cliente.foto}}" alt="{{cliente.foto}}" class="img-thumbnail rounded"
+                        style="width: 400px;">
+                        <img *ngIf="!cliente?.foto" 
+                        src="{{urlBackend}}/images/no-usuario.png" alt="sin foto" class="img-thumbnail rounded"
+                                style="width: 400px; ">
+                    <a href="" class="btn btn-lg btn-outline-light mt-4 px-4">Join Now</a>
+                </div>
+            </div>
+
+            <ng-template #elseBlock2>
+                <div class="col-md-8 p-0">
+                    <div class="gym-class-box2 d-flex flex-column align-items-end justify-content-center text-left text-white py-2 px-5">
+                        <i class="flaticon-six-pack"></i>
+                        <h3 class="display-4 mb-2 text-white font-weight-bold">Lo sentimos su mensualidad ha vencido!</h3>
+                        <p class="font-italic text-capitalize display-6">
+                            {{cliente.nombre}} {{cliente.apellidos}}
+                        </p>
+                        <p>
+                            Su fecha de vencimiento es: {{cliente.fechaFin | date:'mediumDate'}}
+                        </p>
+                        <img *ngIf="!cliente?.foto" 
+                    src="{{urlBackend}}/leonesgym/uploads/img/gatito" alt="sin foto" class="img-thumbnail rounded"
+                            style="width: 350px; ">
+                        <a href="" class="btn btn-lg btn-outline-light mt-4 px-4">Join Now</a>
+                    </div> 
+                </div>      
+              </ng-template>
+        </div>
+    </div>
+
+<ng-template #elseBlock>
+    <div class="container gym-class mb-6 mt-1">
+        <div class="row px-8">
+            <div class="col-md-8 p-0" >
+                <div class="gym-class-box1 d-flex flex-column align-items-start justify-content-center text-left text-white py-2 px-5">
+                    <i class="flaticon-bodybuilding"></i>
+                    <h3 class="display-4 mb-3 text-white font-weight-bold">No se ha encontrado</h3>
+                    <p class="font-italic text-capitalize display-6">
+                       O no existe numero
+                    </p>
+                    <p>
+                        Favor de intentar de nuevo
+                    </p>
+                        <img
+                        src="{{urlBackend}}/images/no-usuario.png" alt="sin foto" class="img-thumbnail rounded"
+                                style="width: 400px; ">
+                    <a href="" class="btn btn-lg btn-outline-light mt-4 px-4">Join Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

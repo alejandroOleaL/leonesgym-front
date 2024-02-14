@@ -5,6 +5,7 @@ import { ModalService } from './modal.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { HttpEventType } from '@angular/common/http';
+import { URL_BACKEND } from 'src/config/config';
 
 @Component({
   selector: 'detalle-cliente',
@@ -18,6 +19,8 @@ export class DetalleComponent implements OnInit {
   titulo: string = "Detalle del cliente";
   public fotoSeleccionada: File;
   public progreso: number = 0;
+
+  urlBackend: string = URL_BACKEND;
 
   constructor(public clienteService: ClienteService,
               public activatedRoute: ActivatedRoute,

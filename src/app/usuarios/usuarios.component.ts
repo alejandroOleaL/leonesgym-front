@@ -4,6 +4,7 @@ import { UsuarioService } from './usuario.service';
 import swal from 'sweetalert2';
 import { tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -16,7 +17,8 @@ export class UsuariosComponent implements OnInit{
   paginador: any;
 
   constructor(public usuarioService: UsuarioService,
-    private activatedRoute: ActivatedRoute) {} 
+    public activatedRoute: ActivatedRoute,
+    public authService: AuthService) {} 
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe( params => {

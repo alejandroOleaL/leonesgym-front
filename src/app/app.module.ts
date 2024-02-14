@@ -30,6 +30,18 @@ import { PaginatorhistorialComponent } from './paginatorhistorial/paginatorhisto
 import { LoginComponent } from './usuarios/login.component';
 import { PaginatorusuariosComponent } from './paginatorusuarios/paginatorusuarios.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { RegistrosComponent } from './registros/registros.component';
+import { PaginatorregistrosComponent } from './paginatorregistros/paginatorregistros.component';
+import { OperacionesComponent } from './operaciones/operaciones.component';
+import { PaginatoroperacionesComponent } from './paginatoroperaciones/paginatoroperaciones.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatSortModule } from '@angular/material/sort';
+import { BienvenidaComponent } from './bienvenida/bienvenida.component';
+import { BienvenidaqrComponent } from './bienvenidaqr/bienvenidaqr.component';
+import { InactivosComponent } from './inactivos/inactivos.component';
+import { ActivosComponent } from './activos/activos.component';
 
 registerLocaleData(localEs, 'es');
 
@@ -37,16 +49,22 @@ const routes: Routes = [
   {path: '', redirectTo: '/clientes', pathMatch: 'full'},
   {path: 'clientes', component: ClientesComponent},
   {path: 'clientes/page/:page', component: ClientesComponent},
+  {path: 'clientes/vencidos/page/:page', component: InactivosComponent},
+  {path: 'clientes/activos/page/:page', component: ActivosComponent},
   {path: 'clientes/form', component: FormComponent},
   {path: 'clientes/form/:id', component: FormComponent},
-  {path: 'monitor', component: MonitorComponent},
+  {path: 'monitor/:id', component: MonitorComponent},
   {path: 'usuarios', component: UsuariosComponent},
   {path: 'usuarios/form', component: UsuarioformComponent},
   {path: 'usuarios/form/:id', component: UsuarioformComponent},
   {path: 'historial/page/:page', component: HistorialComponent},
   {path: 'usuarios/page/:page', component: UsuariosComponent},
+  {path: 'registros/page/:page', component: RegistrosComponent},
+  {path: 'operaciones/page/:page', component: OperacionesComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'estadisticas', component: EstadisticasComponent}
+  {path: 'estadisticas', component: EstadisticasComponent},
+  {path: 'bienvenida/:numero', component: BienvenidaComponent},
+  {path: 'bienvenidaqr/:id', component: BienvenidaqrComponent}
 ];
 
 @NgModule({
@@ -65,7 +83,15 @@ const routes: Routes = [
     PaginatorhistorialComponent,
     LoginComponent,
     PaginatorusuariosComponent,
-    EstadisticasComponent
+    EstadisticasComponent,
+    RegistrosComponent,
+    PaginatorregistrosComponent,
+    OperacionesComponent,
+    PaginatoroperacionesComponent,
+    BienvenidaComponent,
+    BienvenidaqrComponent,
+    InactivosComponent,
+    ActivosComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +100,13 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     BrowserAnimationsModule, MatDatepickerModule, MatNativeDateModule,
     MatMomentDateModule,
-    ZXingScannerModule
+    ZXingScannerModule,
+    MatTableModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    FormsModule,
+    DragDropModule,
+    MatSortModule
   ],
   providers: [ClienteService, {provide: LOCALE_ID, useValue: 'es'}, UsuarioService],
   bootstrap: [AppComponent]

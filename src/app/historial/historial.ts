@@ -3,5 +3,6 @@ export class Historial{
     id:number;
     fechaVisita:string;
     horaVisita:string;
-    cliente:Cliente;
+    nombre:string;
+    apellidos:string;
 }
