@@ -1,3 +1,5 @@
+<app-detalleventa *ngIf="usuarioSeleccionado" [usuario]="usuarioSeleccionado"></app-detalleventa>
+
 <div class="card border-primary mb-3">
     <div class="card-header">Usuarios</div>
     <div class="card-body text-primary">
@@ -20,10 +22,10 @@
          <!--       <th>Editar</th> -->
                 <th *ngIf="authService.hasUsuario('admin')">Eliminar</th>
             </tr>
-        </thead> 
+        </thead>
         <tbody>
             <tr *ngFor="let usuario of usuarios">
-                <td>{{ usuario.id }}</td>
+                <td><button type="button" (click)="abrirModal(usuario)" name="modal" class="btn btn-primary btn-sm">Detalle</button></td> 
                 <td>{{ usuario.nombre }}</td>
                 <td>{{ usuario.apellidos }}</td>
                 <td>{{ usuario.username }}</td>
@@ -32,7 +34,7 @@
                     <button type="button" name="button" [routerLink]="['/usuarios/form', usuario.id]" class="btn btn-primary btn-sm">Editar</button>
                 </td>-->
                 <td *ngIf="authService.hasUsuario('admin')">
-                    <button type="button" name="eliminar" (click)='delete(usuario)' class="btn btn-danger btn-sm">Eliminar</button>
+                    <button [disabled]="usuario.username == 'admin'" type="button" name="eliminar" (click)='delete(usuario)' class="btn btn-danger btn-sm">Eliminar</button>
                 </td>
             </tr>
         </tbody>

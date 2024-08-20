@@ -25,6 +25,7 @@
     "@zxing/ngx-scanner": "^16.0.1",
     "bootstrap": "^5.3.2",
     "chart.js": "^4.4.0",
+    "leonesgym-front": "file:",
     "moment": "^2.29.4",
     "ng2-charts": "^5.0.3",
     "rxjs": "~7.8.0",

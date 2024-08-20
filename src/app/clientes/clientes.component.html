@@ -2,7 +2,7 @@
 
 <div class="container gym-feature py-5">
   <div class="d-flex flex-column text-center mb-5">
-    <h4 class="text-primary font-weight-bold">LeonesGym</h4>
+    <h4 class="text-primary font-weight-bold">Animal Gym</h4>
     <h4 class="display-4 font-weight-bold">Listado de clientes</h4>
   </div>
     <div class="tab-class">
@@ -14,7 +14,10 @@
       </button>
       <button [routerLink]="['/clientes/vencidos/page/0']" class="btn btn-rounded btn-danger mx-2" type="button" >
         Inactivos
-      </button>
+      </button> 
+    <!--  <button type="button" class="btn btn-success btn-sm" 
+                  [routerLink]="['/ventas/form', authService.obtenerUsuario()]" disabled="true">Registrar Venta</button>
+    -->
 
       <div *ngIf="clientes?.length == 0" class="alert alert-info">
         No hay registros en la base de datos!

@@ -9,7 +9,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { HeaderComponent } from './header/header.component';
 import { FormComponent } from './clientes/form.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FooterComponent } from './footer/footer.component';
 import { registerLocaleData } from '@angular/common';
 import localEs from '@angular/common/locales/es';
@@ -42,6 +42,13 @@ import { BienvenidaComponent } from './bienvenida/bienvenida.component';
 import { BienvenidaqrComponent } from './bienvenidaqr/bienvenidaqr.component';
 import { InactivosComponent } from './inactivos/inactivos.component';
 import { ActivosComponent } from './activos/activos.component';
+import { DetalleventaComponent } from './usuarios/detalleventa/detalleventa.component';
+import { ItemVentaComponent } from './ventas/item-venta.component';
+import { VentasComponent } from './ventas/ventas.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { ProductosComponent } from './productos/productos.component';
+import { ProductosFormComponent } from './productos/productos-form.component';
 
 registerLocaleData(localEs, 'es');
 
@@ -64,7 +71,13 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'estadisticas', component: EstadisticasComponent},
   {path: 'bienvenida/:numero', component: BienvenidaComponent},
-  {path: 'bienvenidaqr/:id', component: BienvenidaqrComponent}
+  {path: 'bienvenidaqr/:id', component: BienvenidaqrComponent},
+  {path: 'ventas/:id', component: DetalleventaComponent},
+  {path: 'venta/:id', component: ItemVentaComponent},
+  {path: 'ventas/form/:usuarioId', component: VentasComponent},
+  {path: 'productos/page/:page', component: ProductosComponent},
+  {path: 'productos/form', component: ProductosFormComponent},
+  {path: 'productos/form/:id', component: ProductosFormComponent}
 ];
 
 @NgModule({
@@ -91,7 +104,12 @@ const routes: Routes = [
     BienvenidaComponent,
     BienvenidaqrComponent,
     InactivosComponent,
-    ActivosComponent
+    ActivosComponent,
+    DetalleventaComponent,
+    ItemVentaComponent,
+    VentasComponent,
+    ProductosComponent,
+    ProductosFormComponent
   ],
   imports: [
     BrowserModule,
@@ -106,7 +124,10 @@ const routes: Routes = [
     MatInputModule,
     FormsModule,
     DragDropModule,
-    MatSortModule
+    MatSortModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatFormFieldModule
   ],
   providers: [ClienteService, {provide: LOCALE_ID, useValue: 'es'}, UsuarioService],
   bootstrap: [AppComponent]

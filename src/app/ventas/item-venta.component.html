@@ -1,0 +1,53 @@
+<div class="card bg-light" >
+    <div class="card-header">{{titulo}}: {{venta.nota}}</div>
+        <div class="card-body">
+            <h4 class="card-title">
+                <a [routerLink]="['/usuarios']" class="btn btn-light btn-xs">&laquo; volver</a>
+            </h4>
+            
+            <ul class="list-group my-2">
+                <li class="list-group-item list-group-item-primary">Datos del usuario</li>
+                <li class="list-group-item">{{venta.usuario.nombre}}</li>
+                <li class="list-group-item">{{venta.usuario.apellidos}}</li>
+            </ul>
+
+            <ul class="list-group my-2">
+                <li class="list-group-item list-group-item-primary">Datos de la venta</li>
+                <li class="list-group-item">Folio: {{venta.id}}</li>
+                <li class="list-group-item">Fecha: {{venta.fechaVenta}}</li>
+                <li class="list-group-item">Hora: {{venta.horaVenta}}</li>
+            </ul>
+
+            <table class="table table-striped table-hover table-bordered my-3">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let detalle of venta.detalles">
+                        <td>{{detalle.producto.nombre}}</td>
+                        <td>{{detalle.producto.precio}}</td>
+                        <td>{{detalle.cantidad}}</td>
+                        <td>{{detalle.importe}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5 class="float-right">
+                <span>Total: {{venta.total}}</span>
+            </h5>
+
+            <div class="card border-info mb-4" style="max-width: 250px;">
+                <div class="card card-header">
+                    Notas:
+                </div>
+                <div class="card card-body">
+                    <p *ngIf="!venta.nota">No tiene alguna nota!</p>
+                    <p *ngIf="venta.nota">{{venta.nota}}</p>
+                </div>
+            </div>
+    </div>
+</div>

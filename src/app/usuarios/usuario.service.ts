@@ -16,6 +16,8 @@ export class UsuarioService {
 
   public urlEndPoint:string = URL_BACKEND + '/leonesgym/usuarios';
 
+  public urlEndPointUser:string = URL_BACKEND + '/leonesgym/username';
+
   public httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
 
   constructor(public http: HttpClient,
@@ -80,6 +82,21 @@ export class UsuarioService {
           }
 
           this.router.navigate(['/usuarios']);
+          Swal.fire('Error al buscar', e.error.mensaje, 'error');
+          return throwError(e);
+        })
+      );
+    }
+
+    getUsuarioUsername(username): Observable<Usuario>{
+      return this.http.get<Usuario>(`${this.urlEndPointUser}/${username}`, {headers: this.httpHeaders}).pipe(
+        catchError(e => {
+
+          if(this.isNoAutorizado(e)){
+            return throwError(e);
+          }
+
+          this.router.navigate(['/clientes']);
           Swal.fire('Error al buscar', e.error.mensaje, 'error');
           return throwError(e);
         })

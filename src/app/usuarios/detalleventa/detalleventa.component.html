@@ -1,0 +1,73 @@
+<div class="abrir-modal animacion fadeIn" *ngIf="modalService.modal">
+    <div class="modal" tabindex="-1" role="dialog" style="display: block;">
+        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{titulo}}</h5>
+                <button (click)="cerrarModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+    
+                        <div class="col-sm">
+                            <ul *ngIf="usuario" class="list-group text-dark mb-3">
+                                <li class="list-group-item active">Nombre: {{usuario.nombre}}</li>
+                                <li class="list-group-item">Apellidos: {{usuario.apellidos}}</li>
+                                <li class="list-group-item">Username: {{usuario.username}}</li>
+                                <li class="list-group-item">Email: {{usuario.email}}</li>
+                                <li class="list-group-item">Tipo: <span *ngFor="let role of usuario.roles">{{role.nombre + ' '}}</span></li>
+                            </ul>
+                            <div class="input-group mb-3">
+                                
+                            </div>
+            
+                            <div *ngIf="progreso > 0" class="progress" style="height: 40px;">
+                                <div class="progress-bar progress-bar-striped" role="progressbar" [ngStyle]="{width:progreso+'%'}" attr.aria-valuenow="{{progreso}}" aria-valuemin="0" aria-valuemax="100">
+                                    {{progreso}}%
+                                </div>
+                            </div>
+            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="alter alert-info my-4" *ngIf="usuario.ventas.length==0">
+                            No hay ventas registradas del usuario {{usuario.nombre}} {{usuario.apellidos}}!
+                        </div>
+                        <table class="table table-bordered table-striped my-4"
+                        *ngIf="usuario.ventas.length>0">
+                            <thead>
+                                <th>Folio:</th>
+                                <th>Nota:</th>
+                                <th>Fecha:</th>
+                                <th>Hora:</th>
+                                <th>Total:</th>
+                                <th>Ver detalle:</th>
+                                <th>Eliminar:</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let venta of usuario.ventas">
+                                    <td>{{venta.id}}</td>
+                                    <td>{{venta.nota}}</td>
+                                    <td>{{venta.fechaVenta}}</td>
+                                    <td>{{venta.horaVenta}}</td>
+                                    <td>{{venta.total}}</td>
+                                    <td><button class="btn btn-primary btn-sm" type="button"
+                                        [routerLink]="['/venta', venta.id]">Ver</button></td>
+                                    <td><button class="btn btn-danger btn-sm" type="button" (click)="delete(venta)">Eliminar</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>

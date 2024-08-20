@@ -1,3 +1,4 @@
+import { Venta } from "../ventas/models/venta";
 import { Role } from "./role";
 
 export class Usuario {
@@ -10,4 +11,5 @@ export class Usuario {
     roles:string[]=[];
     role: Role[]=[];
     tipo: number;
+    ventas: Venta[] = [];
 }

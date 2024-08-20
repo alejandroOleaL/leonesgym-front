@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <img href="#" src="{{urlBackend}}/images/logoLeones.jpg" alt="sin foto" style="width: 50px; "> 
+    
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -27,6 +27,11 @@
         <li class="nav-item" routerLinkActive="active" *ngIf="authService.hasUsuario('admin')">
           <a class="nav-link" [routerLink]="['/operaciones/page/0']">Operaciones</a>
         </li>
+        <!--
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/productos/page/0']">Productos</a>
+        </li>
+        -->
       </ul>
       <ul class="navbar-nav navbar-right">
         <li *ngIf="!authService.isAuthenticated()"><a [routerLink]="['/login']" class="btn btn-outline-primary">Login</a></li>

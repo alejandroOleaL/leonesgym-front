@@ -24,6 +24,7 @@ export class ClientesComponent implements OnInit {
   fecha = formatDate(new Date(), 'yyyy-MM-dd', 'en-ES')
   urlBackend: string = URL_BACKEND;
   dataSource:any;
+  public username;
 
   @ViewChild(MatSort, {static: true}) sort!: MatSort;
 
@@ -35,6 +36,8 @@ export class ClientesComponent implements OnInit {
     columnas: string[] = ['nombre', 'apellidos', 'numControl', 'fechaInicio', 'fechaFin', 'estatus', 'eliminar'];
 
   ngOnInit(){
+    this.username = this.authService.obtenerUsuario();
+    console.log('user', this.username);
     this.activatedRoute.paramMap.subscribe( params => {
     let page:number = +params.get('page');
 
@@ -103,6 +106,6 @@ export class ClientesComponent implements OnInit {
   abrirModal(cliente: Cliente){
     this.clienteSeleccionado = cliente;
     this.modalService.abrirModal();
-  }
+  } 
 
 }

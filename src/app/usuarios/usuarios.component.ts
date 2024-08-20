@@ -5,6 +5,7 @@ import swal from 'sweetalert2';
 import { tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from './auth.service';
+import { ModalService } from '../clientes/detalle/modal.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -15,10 +16,12 @@ export class UsuariosComponent implements OnInit{
 
   usuarios: Usuario[];
   paginador: any;
+  usuarioSeleccionado: Usuario;
 
   constructor(public usuarioService: UsuarioService,
     public activatedRoute: ActivatedRoute,
-    public authService: AuthService) {} 
+    public authService: AuthService,
+    public modalService: ModalService) {}
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe( params => {
@@ -40,6 +43,13 @@ export class UsuariosComponent implements OnInit{
         this.usuarios = response.content as Usuario[];
         this.paginador = response;
       });
+      });
+
+
+      this.modalService.notificarUpload.subscribe(usuario => {
+        this.usuarios = this.usuarios.map(usuarioOriginal => {
+          return usuarioOriginal;
+        });
       });
   } 
 
@@ -68,6 +78,12 @@ export class UsuariosComponent implements OnInit{
 
         
       }
-    })
+    }) 
   }
+
+  abrirModal(usuario: Usuario){
+    this.usuarioSeleccionado = usuario;
+    this.modalService.abrirModal();
+  }
+
 }
